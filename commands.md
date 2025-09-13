@@ -1,6 +1,6 @@
 # Docker Commands
 
-Some of the most commonly used docker commands are 
+Some of the most commonly used docker commands. Can be used to pull the right syntax of the docker commands. 
 
 ### docker images
 
