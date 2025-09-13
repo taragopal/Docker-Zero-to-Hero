@@ -10,7 +10,7 @@ Lists docker images on the host machine.
 
 Builds image from Dockerfile.
 
-### docker run
+### docker run 
 
 Runs a Docker container. 
 
@@ -21,7 +21,7 @@ There are many arguments which you can pass to this command for example,
 
 use `docker run --help` to look into more arguments.
 
-### docker ps
+### docker ps 
 
 Lists running containers on the host machine.
 
