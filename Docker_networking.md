@@ -83,7 +83,9 @@ Additionally, not all Docker image and command combinations are compatible with 
 
 ### Overlay Networking
 
-This mode enables communication between containers across multiple Docker host machines, allowing containers to be connected to a single network even when they are running on different hosts.
+--This mode enables communication between containers across multiple Docker host machines, allowing containers to be connected to a single network even when they are running on different hosts. 
+--Overlay networks are often used to create a connection between Swarm services.
+--Overlay network is not supported on Windows devices. 
 
 ## Create an OVERLAY network commands: 
 
