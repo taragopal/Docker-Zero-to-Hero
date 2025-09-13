@@ -85,6 +85,17 @@ Additionally, not all Docker image and command combinations are compatible with 
 
 This mode enables communication between containers across multiple Docker host machines, allowing containers to be connected to a single network even when they are running on different hosts.
 
+## Create an OVERLAY network commands: 
+
+docker network create -d overlay --attachable my-attachable-overlay
+
+/ * --attachable option enables both standalone containers and Swarm services to connect to the overlay network. Without --attachable, only Swarm services can connect to the network.
+
+## Encrypt traffic on overlay network 
+
+docker network create   --opt encrypted --driver overlay --attachable my-attachable-multi-host-network
+
+
 ### Macvlan Networking
 
 This mode allows a container to appear on the network as a physical host rather than as a container.
