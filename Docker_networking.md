@@ -1,5 +1,8 @@
 # Docker Networking
 
+Source: https://docs.docker.com/engine/network/drivers/macvlan/
+
+
 Networking allows containers to communicate with each other and with the host system. Containers run isolated from the host system
 and need a way to communicate with each other and with the host system.
 
@@ -14,6 +17,15 @@ NETWORK ID          NAME                DRIVER
 xxxxxxxxxxxx        none                null
 xxxxxxxxxxxx        host                host
 xxxxxxxxxxxx        bridge              bridge
+
+Driver	            Description
+bridge	            The default network driver.
+host		            Remove network isolation between the container and the Docker host.
+none		            Completely isolate a container from the host and other containers.
+overlay		          Overlay networks connect multiple Docker daemons together.
+ipvlan		          IPvlan networks provide full control over both IPv4 and IPv6 addressing.
+macvlan	            Assign a MAC address to a container.
+
 ```
 
 
@@ -97,8 +109,27 @@ docker network create -d overlay --attachable my-attachable-overlay
 
 docker network create   --opt encrypted --driver overlay --attachable my-attachable-multi-host-network
 
+## Attach a container to an overlay network
+If the hosts have joined the same Docker swarm, attaching these container to the same overlay network would allow them to communicate with each other, without having to setup ROUTING on individual Docker Daemon hosts. Its benifical. 
+
+docker run --network multi-host-network busybox sh
 
 ### Macvlan Networking
 
-This mode allows a container to appear on the network as a physical host rather than as a container.
+This mode allows a container to appear on the network as a physical host rather than as a container. For the legacy applications, which expects to be connected with a physical device Macvlan is the only option. 
 
+## TO create Macvlan network with Bridge mode 
+
+docker network create -d macvlan  --subnet=172.16.86.0/24   --gateway=172.16.86.1  -o parent=eth0 pub_net 
+
+## Use an IPvlan instead of Macvlan
+In the above example, you are still using a L3 bridge. You can use ipvlan instead, and get an L2 bridge. Specify -o ipvlan_mode=l2.
+
+docker network create -d ipvlan \
+    --subnet=192.168.210.0/24 \
+    --subnet=192.168.212.0/24 \
+    --gateway=192.168.210.254 \
+    --gateway=192.168.212.254 \
+     -o ipvlan_mode=l2 -o parent=eth0 ipvlan210
+
+     Source: 
